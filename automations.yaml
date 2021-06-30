@@ -262,3 +262,20 @@
       first_timer: 15
       second_timer: 25
       device_identifier: c68611e4d59768be625991df303e196c
+- id: '1618651741397'
+  alias: Turn on Coffee maschine on button press
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: 588477724c76d44b4f53cd58d7a56566
+    type: click
+    subtype: single
+    discovery_id: 0x00158d000572a61c click_single
+  condition: []
+  action:
+  - type: toggle
+    device_id: 1f298e5da1cf021e100c209b0b18c23f
+    entity_id: switch.socket_kitchen_coffee
+    domain: switch
+  mode: single
