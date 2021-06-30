@@ -1,0 +1,17 @@
+thermostats:
+  name: Thermostate
+  entities:
+    - climate.badezimmer_heizung
+    - climate.arbeitszimmer_heizung
+    - climate.wohnzimmer_heizung_links
+    - climate.wohnzimmer_heizung_rechts
+bedroom_lights:
+  name: Schlafzimmer Licht
+  entities:
+    - light.0x00158d000388fcf5_light
+    - light.0x00158d000388fdd1_light
+livingroom_tv_lights:
+  name: Fernseher Licht
+  entities:
+    - light.0xf0d1b800001a2867
+    - light.0xf0d1b800001a2a0e

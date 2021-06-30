@@ -1,0 +1,264 @@
+- id: '1604065251338'
+  alias: Heizung Bad morgens ein
+  description: ''
+  trigger:
+  - platform: time
+    at: '5:30'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.workday_sensor
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.vacation_mode
+    state: 'off'
+  action:
+  - service: climate.set_temperature
+    data:
+      temperature: 24
+    entity_id: climate.badezimmer_heizung
+  mode: single
+- id: '1604065457562'
+  alias: Heizung Bad morgens aus
+  description: ''
+  trigger:
+  - platform: time
+    at: '6:30'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.workday_sensor
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.vacation_mode
+    state: 'off'
+  action:
+  - service: climate.set_temperature
+    data:
+      temperature: 16
+    entity_id: climate.badezimmer_heizung
+  mode: single
+- alias: Heizung aus im Urlaub
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: input_boolean.vacation_mode
+    to: 'on'
+  action:
+  - service: climate.set_temperature
+    data:
+      temperature: 16
+    entity_id: group.thermostats
+  mode: single
+  id: 28a16e7e64d648259f4d2d0efc31278d
+- id: '1605795188720'
+  alias: Schlafzimmer Licht Aus Samu
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.0x0017880108741c2e_action
+    attribute: action
+    to: off-press
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    entity_id: light.0x00158d000388fdd1_light
+  mode: single
+- id: '1605795240822'
+  alias: Schlafzimmer Licht An Samu
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.0x0017880108741c2e_action
+    attribute: action
+    to: on-press
+  condition: []
+  action:
+  - service: light.turn_on
+    data: {}
+    entity_id: light.0x00158d000388fdd1_light
+  mode: single
+- id: '1605799037544'
+  alias: Schlafzimmer Licht An Miriam
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.0x0017880108741aed_action
+    to: on-press
+    attribute: action
+  condition: []
+  action:
+  - service: light.turn_on
+    data: {}
+    entity_id: light.0x00158d000388fcf5_light
+  mode: single
+- id: '1605799093004'
+  alias: Schlafzimmer Licht Aus Miriam
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.0x0017880108741aed_action
+    attribute: action
+    to: off-press
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    entity_id: light.0x00158d000388fcf5_light
+  mode: single
+- id: '1615720799553'
+  alias: Toggle Light Living Room Sideboard
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: c2b2872c64beda69a3f9e85d94eb0028
+    type: action
+    subtype: shake
+    discovery_id: 0x00158d000544a537 action_shake
+  condition: []
+  action:
+  - type: toggle
+    device_id: 413243a92300b87f1d4fe631e170140f
+    entity_id: light.0x00158d00052cd690
+    domain: light
+  mode: single
+- id: '1615724730398'
+  alias: Turn on Light Harmony
+  description: ''
+  trigger:
+  - platform: event
+    event_type: roku_command
+    event_data:
+      key: Info
+      source_name: Home Assistant
+      type: keypress
+  condition: []
+  action:
+  - type: toggle
+    device_id: 413243a92300b87f1d4fe631e170140f
+    entity_id: light.0x00158d00052cd690
+    domain: light
+  mode: single
+- id: '1615729998455'
+  alias: Dim Light Bedroom Samuel Down
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: d88bb168597c7a136d69c0d9d3661dd1
+    type: action
+    subtype: down-press
+    discovery_id: 0x0017880108741c2e action_down-press
+  condition:
+  - condition: device
+    type: is_on
+    device_id: 99f2d80d7f693e0ae5ee4b11bc4b212d
+    entity_id: light.0x00158d000388fdd1_light
+    domain: light
+  action:
+  - type: brightness_decrease
+    device_id: 99f2d80d7f693e0ae5ee4b11bc4b212d
+    entity_id: light.0x00158d000388fdd1_light
+    domain: light
+  mode: single
+- id: '1615730187359'
+  alias: Dim Light Bedroom Samuel Up
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: d88bb168597c7a136d69c0d9d3661dd1
+    type: action
+    subtype: up-press
+    discovery_id: 0x0017880108741c2e action_up-press
+  condition: []
+  action:
+  - type: brightness_increase
+    device_id: 99f2d80d7f693e0ae5ee4b11bc4b212d
+    entity_id: light.0x00158d000388fdd1_light
+    domain: light
+  mode: single
+- id: '1615730730516'
+  alias: Licht an Wohnzimmer Sonnenuntergang
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: -01:00:00
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: device_tracker.iphone_von_miriam
+      state: home
+    - condition: state
+      entity_id: device_tracker.sm_g973f
+      state: home
+  action:
+  - domain: light
+    entity_id: light.0x00158d00052cd690
+    device_id: 413243a92300b87f1d4fe631e170140f
+    type: turn_on
+  mode: single
+- id: '1615731734870'
+  alias: Dim Light Bedroom Miriam Up
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: 82e12271647a494831eaca69c704667a
+    type: action
+    subtype: up-press
+    discovery_id: 0x0017880108741aed action_up-press
+  condition: []
+  action:
+  - type: brightness_increase
+    device_id: 8f25bafa6bc3cd0e14e22b6ccdf9fe02
+    entity_id: light.0x00158d000388fcf5_light
+    domain: light
+  mode: single
+- id: '1615731768449'
+  alias: Dim Light Bedroom Miriam Down
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: 82e12271647a494831eaca69c704667a
+    type: action
+    subtype: down-press
+    discovery_id: 0x0017880108741aed action_down-press
+  condition: []
+  action:
+  - type: brightness_decrease
+    device_id: 8f25bafa6bc3cd0e14e22b6ccdf9fe02
+    entity_id: light.0x00158d000388fcf5_light
+    domain: light
+  mode: single
+- id: '1616321769990'
+  alias: Window open, climate off Bad
+  description: ''
+  use_blueprint:
+    path: SmartLiving.Rocks/window-open-climate-off.yaml
+    input:
+      window_entity: binary_sensor.0x00158d0005422b41_contact
+      climate_target: climate.badezimmer_heizung
+- id: '1616680393074'
+  alias: Notification to Close a Window Bad/Samu
+  description: ''
+  use_blueprint:
+    path: home-IoT/reminder_to_close_window.yaml
+    input:
+      contact_sensor: binary_sensor.0x00158d0005422b41_contact
+      first_timer: 15
+      second_timer: 25
+      device_identifier: 4b5ae1462991213bd77f2233417796c9
+- id: '1616680428647'
+  alias: Notification to Close a Window Bad/Miriam
+  description: ''
+  use_blueprint:
+    path: home-IoT/reminder_to_close_window.yaml
+    input:
+      contact_sensor: binary_sensor.0x00158d0005422b41_contact
+      first_timer: 15
+      second_timer: 25
+      device_identifier: c68611e4d59768be625991df303e196c

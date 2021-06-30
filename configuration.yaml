@@ -1,0 +1,45 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation manual: !include_dir_merge_list automation/
+automation ui: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+http:
+  use_x_forwarded_for: true
+  trusted_proxies: 192.168.99.56
+
+
+homematic:
+  interfaces:
+    homeaticip:
+      host: 192.168.99.59
+      resolvenames: json
+      port: 2010
+      username: Admin
+      password: !secret homematic_pw
+
+mqtt:
+  discovery: true
+  broker: 192.168.99.61
+  client_id: home-assistant
+  username: ha
+  password: !secret mqtt_pw
+
+binary_sensor:
+  - platform: workday
+    country: DE
+    province: BY
+
+input_boolean:
+  vacation_mode:
+    name: Urlaubsmodus
+    initial: off
+    icon: mdi:island

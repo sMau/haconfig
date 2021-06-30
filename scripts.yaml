@@ -1,0 +1,20 @@
+go_to_bed:
+  alias: Go to bed
+  sequence:
+  - service: climate.set_temperature
+    data:
+      temperature: 16
+    entity_id: climate.arbeitszimmer_heizung
+  - service: climate.set_temperature
+    data:
+      temperature: 16
+    entity_id: climate.badezimmer_heizung
+  - service: climate.set_temperature
+    data:
+      temperature: 16
+    entity_id: climate.wohnzimmer_heizung_links
+  - service: climate.set_temperature
+    data:
+      temperature: 16
+    entity_id: climate.wohnzimmer_heizung_rechts
+  mode: single
