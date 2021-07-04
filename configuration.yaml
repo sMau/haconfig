@@ -43,3 +43,31 @@ input_boolean:
     name: Urlaubsmodus
     initial: off
     icon: mdi:island
+
+template:
+  sensors:
+
+    roborock_s5_battery:
+      friendly_name: 'Roborock S5 Battery'
+      value_template: "{{state_attr('vacuum.roborock_vacuum_s5', 'battery_level')}}"
+      unit_of_measurement: '%'
+      device_class: battery
+
+    roborock_s5_lifetime_cleaned_area:
+      friendly_name: 'Lifetime Cleaned Area'
+      value_template: "{{state_attr('vacuum.roborock_vacuum_s5', 'total_cleaned_area')}}"
+      unit_of_measurement: ㎡
+
+    roborock_s5_lifetime_cleaning_time:
+      friendly_name: 'Lifetime Cleaning Time'
+      value_template: "{{(state_attr('vacuum.roborock_vacuum_s5', 'total_cleaning_time') / 60)|round(1, 'floor')}}"
+
+    # NOTE: This date is converted to be timezone aware so that it plays nice
+    # with some other templating functions and filters.
+    roborock_s5_last_cleaned:
+      friendly_name: Relative time since last cleaning ended
+      value_template: "{{relative_time(strptime(as_timestamp(state_attr('vacuum.roborock_vacuum_s5', 'clean_stop'))|timestamp_custom('%Y-%m-%d %H:%M:%S%z'), '%Y-%m-%d %H:%M:%S%z'))}}"
+
+    roborock_s5_lifetime_cleaning_count:
+      friendly_name: 'Lifetime Cleaning Count'
+      value_template: "{{state_attr('vacuum.roborock_vacuum_s5', 'cleaning_count')}}"
