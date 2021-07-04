@@ -1,0 +1,10 @@
+{
+  "domain": "audiconnect",
+  "name": "Audi Connect",
+  "config_flow": true,
+  "documentation": "https://www.home-assistant.io/components/audiconnect",
+  "requirements": ["beautifulsoup4"],
+  "dependencies": [],
+  "codeowners": ["@arjenvrh"],
+  "version": "2021.1.1"
+}

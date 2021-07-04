@@ -24,3 +24,13 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+
+.HA_VERSION
+.storage/
+deps/
+home-assistant.log
+home-assistant_v2.db
+home-assistant_v2.db-shm
+home-assistant_v2.db-wal
+secrets.yaml
