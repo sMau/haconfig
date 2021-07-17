@@ -44,6 +44,9 @@ input_boolean:
     initial: off
     icon: mdi:island
 
+emulated_hue:
+  listen_port: 80
+
 template:
   sensors:
 
