@@ -1,2 +1,6 @@
 cover.markise:
   assumed_state: true
+cover.wohnzimmer_l:
+  assumed_state: true
+cover.wohnzimmer_r:
+  assumed_state: true
